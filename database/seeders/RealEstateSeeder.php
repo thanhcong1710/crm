@@ -3,21 +3,18 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Webkul\User\Models\Role;
-use Webkul\User\Models\Group;
-use Webkul\User\Models\User;
-use Webkul\Attribute\Models\Attribute;
-use Webkul\Attribute\Models\AttributeOption;
-use Webkul\Product\Models\Product;
-use Webkul\Lead\Models\LeadSource;
-use Webkul\Lead\Models\LeadType;
-use Webkul\Lead\Models\Pipeline;
-use Webkul\Lead\Models\Stage;
-use Webkul\Lead\Models\Lead;
-use Webkul\Contact\Models\Person;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+use Webkul\Attribute\Models\Attribute;
+use Webkul\Attribute\Models\AttributeOption;
+use Webkul\Contact\Models\Person;
+use Webkul\Lead\Models\Lead;
+use Webkul\Lead\Models\Pipeline;
+use Webkul\Lead\Models\Stage;
+use Webkul\Product\Models\Product;
+use Webkul\User\Models\Group;
+use Webkul\User\Models\Role;
+use Webkul\User\Models\User;
 
 class RealEstateSeeder extends Seeder
 {
@@ -28,7 +25,7 @@ class RealEstateSeeder extends Seeder
             'Phòng Kinh Doanh 1',
             'Phòng Kinh Doanh 2',
             'Bộ Phận Hành Chính',
-            'Ban Giám Đốc'
+            'Ban Giám Đốc',
         ];
         $groupIds = [];
         foreach ($groups as $name) {
@@ -50,7 +47,7 @@ class RealEstateSeeder extends Seeder
             'products',
             'products.create',
             'products.edit',
-            'products.view'
+            'products.view',
         ];
         $tpkdPermissions = array_merge($nvkdPermissions, [
             'leads.delete',
@@ -61,66 +58,66 @@ class RealEstateSeeder extends Seeder
             'quotes.view',
             'contacts.organizations',
             'contacts.organizations.create',
-            'contacts.organizations.edit'
+            'contacts.organizations.edit',
         ]);
 
         $roleNVKD = Role::firstOrCreate(['name' => 'Nhân Viên Kinh Doanh'], [
-            'description' => 'Quyền NVKD (Chỉ cá nhân)',
+            'description'     => 'Quyền NVKD (Chỉ cá nhân)',
             'permission_type' => 'custom',
-            'permissions' => $nvkdPermissions
+            'permissions'     => $nvkdPermissions,
         ]);
 
         $roleTPKD = Role::firstOrCreate(['name' => 'Trưởng Phòng Kinh Doanh'], [
-            'description' => 'Quyền TPKD (Đội nhóm)',
+            'description'     => 'Quyền TPKD (Đội nhóm)',
             'permission_type' => 'custom',
-            'permissions' => $tpkdPermissions
+            'permissions'     => $tpkdPermissions,
         ]);
 
         // 3. Create Users
         $manager = User::firstOrCreate(['email' => 'manager@krayin.com'], [
-            'name' => 'Trưởng Phòng KD1',
-            'password' => Hash::make('12345678'),
-            'role_id' => $roleTPKD->id,
+            'name'            => 'Trưởng Phòng KD1',
+            'password'        => Hash::make('12345678'),
+            'role_id'         => $roleTPKD->id,
             'view_permission' => 'group',
-            'status' => 1
+            'status'          => 1,
         ]);
 
         DB::table('user_groups')->updateOrInsert(['user_id' => $manager->id, 'group_id' => $groupIds['Phòng Kinh Doanh 1']]);
 
         $sale1 = User::firstOrCreate(['email' => 'sale1@krayin.com'], [
-            'name' => 'Nhân Viên KD1 A',
-            'password' => Hash::make('12345678'),
-            'role_id' => $roleNVKD->id,
+            'name'            => 'Nhân Viên KD1 A',
+            'password'        => Hash::make('12345678'),
+            'role_id'         => $roleNVKD->id,
             'view_permission' => 'individual',
-            'status' => 1
+            'status'          => 1,
         ]);
         DB::table('user_groups')->updateOrInsert(['user_id' => $sale1->id, 'group_id' => $groupIds['Phòng Kinh Doanh 1']]);
 
         $sale2 = User::firstOrCreate(['email' => 'sale2@krayin.com'], [
-            'name' => 'Nhân Viên KD1 B',
-            'password' => Hash::make('12345678'),
-            'role_id' => $roleNVKD->id,
+            'name'            => 'Nhân Viên KD1 B',
+            'password'        => Hash::make('12345678'),
+            'role_id'         => $roleNVKD->id,
             'view_permission' => 'individual',
-            'status' => 1
+            'status'          => 1,
         ]);
         DB::table('user_groups')->updateOrInsert(['user_id' => $sale2->id, 'group_id' => $groupIds['Phòng Kinh Doanh 1']]);
 
         // 4. Create Attributes for Product
         $attrArea = Attribute::firstOrCreate(['code' => 'dien_tich_m2'], [
-            'name' => 'Diện tích (m2)',
-            'type' => 'text',
-            'validation' => 'numeric',
-            'entity_type' => 'products',
+            'name'            => 'Diện tích (m2)',
+            'type'            => 'text',
+            'validation'      => 'numeric',
+            'entity_type'     => 'products',
             'is_user_defined' => 1,
-            'quick_add' => 1
+            'quick_add'       => 1,
         ]);
 
         $attrLocation = Attribute::firstOrCreate(['code' => 'vi_tri_quan'], [
-            'name' => 'Vị trí/Quận huyện',
-            'type' => 'select',
-            'entity_type' => 'products',
+            'name'            => 'Vị trí/Quận huyện',
+            'type'            => 'select',
+            'entity_type'     => 'products',
             'is_user_defined' => 1,
-            'quick_add' => 1
+            'quick_add'       => 1,
         ]);
         $locations = ['Quận 1', 'Quận 2', 'Quận 3', 'Quận 7', 'Quận 9', 'Bình Thạnh', 'Thủ Đức'];
         foreach ($locations as $idx => $loc) {
@@ -128,11 +125,11 @@ class RealEstateSeeder extends Seeder
         }
 
         $attrDirection = Attribute::firstOrCreate(['code' => 'huong_nha'], [
-            'name' => 'Hướng nhà',
-            'type' => 'select',
-            'entity_type' => 'products',
+            'name'            => 'Hướng nhà',
+            'type'            => 'select',
+            'entity_type'     => 'products',
             'is_user_defined' => 1,
-            'quick_add' => 1
+            'quick_add'       => 1,
         ]);
         $directions = ['Đông', 'Tây', 'Nam', 'Bắc', 'Đông Nam', 'Đông Bắc', 'Tây Nam', 'Tây Bắc'];
         foreach ($directions as $idx => $dir) {
@@ -140,11 +137,11 @@ class RealEstateSeeder extends Seeder
         }
 
         $attrType = Attribute::firstOrCreate(['code' => 'loai_bds'], [
-            'name' => 'Loại BĐS',
-            'type' => 'select',
-            'entity_type' => 'products',
+            'name'            => 'Loại BĐS',
+            'type'            => 'select',
+            'entity_type'     => 'products',
             'is_user_defined' => 1,
-            'quick_add' => 1
+            'quick_add'       => 1,
         ]);
         $types = ['Đất nền', 'Căn hộ', 'Nhà phố', 'Biệt thự/Villa', 'Condotel'];
         foreach ($types as $idx => $type) {
@@ -156,13 +153,13 @@ class RealEstateSeeder extends Seeder
         $productLocations = AttributeOption::where('attribute_id', $attrLocation->id)->get()->toArray();
         for ($i = 1; $i <= 8; $i++) {
             $prod = Product::firstWhere('sku', "BDS-00$i");
-            if (!$prod) {
+            if (! $prod) {
                 $prod = Product::create([
-                    'sku' => "BDS-00$i",
-                    'name' => "Sản Phẩm BĐS $i",
+                    'sku'         => "BDS-00$i",
+                    'name'        => "Sản Phẩm BĐS $i",
                     'description' => "Căn hộ/Đất nền vị trí đẹp số $i",
-                    'quantity' => 1,
-                    'price' => rand(1500, 5000) * 1000000
+                    'quantity'    => 1,
+                    'price'       => rand(1500, 5000) * 1000000,
                 ]);
 
                 $t = $productTypes[array_rand($productTypes)];
@@ -170,7 +167,7 @@ class RealEstateSeeder extends Seeder
                 DB::table('attribute_values')->insert([
                     ['entity_id' => $prod->id, 'entity_type' => 'products', 'attribute_id' => $attrArea->id, 'integer_value' => null, 'text_value' => rand(50, 200)],
                     ['entity_id' => $prod->id, 'entity_type' => 'products', 'attribute_id' => $attrType->id, 'integer_value' => $t['id'], 'text_value' => null],
-                    ['entity_id' => $prod->id, 'entity_type' => 'products', 'attribute_id' => $attrLocation->id, 'integer_value' => $l['id'], 'text_value' => null]
+                    ['entity_id' => $prod->id, 'entity_type' => 'products', 'attribute_id' => $attrLocation->id, 'integer_value' => $l['id'], 'text_value' => null],
                 ]);
             }
         }
@@ -213,26 +210,26 @@ class RealEstateSeeder extends Seeder
         // 8. Persons & Leads
         for ($i = 1; $i <= 10; $i++) {
             $person = Person::firstWhere('name', "Khách BĐS Phạm Văn $i");
-            if (!$person) {
+            if (! $person) {
                 $person = Person::create([
-                    'name' => "Khách BĐS Phạm Văn $i",
-                    'emails' => [['value' => "khach$i@test.com", 'label' => 'work']],
-                    'contact_numbers' => [['value' => "09" . rand(10000000, 99999999), 'label' => 'work']],
-                    'user_id' => ($i % 2 == 0) ? $sale1->id : $sale2->id
+                    'name'            => "Khách BĐS Phạm Văn $i",
+                    'emails'          => [['value' => "khach$i@test.com", 'label' => 'work']],
+                    'contact_numbers' => [['value' => '09'.rand(10000000, 99999999), 'label' => 'work']],
+                    'user_id'         => ($i % 2 == 0) ? $sale1->id : $sale2->id,
                 ]);
             }
 
             Lead::firstOrCreate(['title' => "Quan tâm Dự Án X - KH $i"], [
-                'description' => "Khách hàng quan tâm dự án qua quảng cáo / referral.",
-                'lead_value' => rand(10, 50) * 100000000,
-                'status' => 1,
-                'expected_close_date' => now()->addDays(rand(5, 30)),
-                'user_id' => ($i % 2 == 0) ? $sale1->id : $sale2->id,
-                'person_id' => $person->id,
-                'lead_source_id' => $leadSources[array_rand($leadSources)],
-                'lead_type_id' => $leadTypesArr[array_rand($leadTypesArr)],
-                'lead_pipeline_id' => $pipeline->id,
-                'lead_pipeline_stage_id' => $stageIds[array_rand($stageIds)]
+                'description'            => 'Khách hàng quan tâm dự án qua quảng cáo / referral.',
+                'lead_value'             => rand(10, 50) * 100000000,
+                'status'                 => 1,
+                'expected_close_date'    => now()->addDays(rand(5, 30)),
+                'user_id'                => ($i % 2 == 0) ? $sale1->id : $sale2->id,
+                'person_id'              => $person->id,
+                'lead_source_id'         => $leadSources[array_rand($leadSources)],
+                'lead_type_id'           => $leadTypesArr[array_rand($leadTypesArr)],
+                'lead_pipeline_id'       => $pipeline->id,
+                'lead_pipeline_stage_id' => $stageIds[array_rand($stageIds)],
             ]);
         }
     }
