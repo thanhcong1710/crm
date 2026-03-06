@@ -6,6 +6,7 @@ use Webkul\Admin\Http\Controllers\DataGrid\SavedFilterController;
 use Webkul\Admin\Http\Controllers\DataGridController;
 use Webkul\Admin\Http\Controllers\TinyMCEController;
 use Webkul\Admin\Http\Controllers\User\AccountController;
+use Webkul\Admin\Http\Controllers\GuideController;
 
 /**
  * Dashboard routes.
@@ -51,4 +52,11 @@ Route::controller(AccountController::class)->prefix('account')->group(function (
     Route::get('', 'edit')->name('admin.user.account.edit');
 
     Route::put('update', 'update')->name('admin.user.account.update');
+});
+
+/**
+ * Guide routes.
+ */
+Route::controller(GuideController::class)->prefix('guide')->group(function () {
+    Route::get('', 'index')->name('admin.guide.index');
 });
