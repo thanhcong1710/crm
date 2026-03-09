@@ -1,10 +1,10 @@
 <div
     ref="sidebar"
-    class="duration-80 fixed top-[60px] z-[10002] h-full w-[200px] border-gray-200 bg-white pt-4 transition-all group-[.sidebar-collapsed]/container:w-[70px] dark:border-gray-800 dark:bg-gray-900 max-lg:hidden ltr:border-r rtl:border-l"
+    class="duration-80 fixed top-[60px] z-[10002] h-full w-[270px] border-gray-200 bg-white pt-4 transition-all group-[.sidebar-collapsed]/container:w-[70px] dark:border-gray-800 dark:bg-gray-900 max-lg:hidden ltr:border-r rtl:border-l shadow-[0px_0px_20px_0px_rgba(0,0,0,0.05)]"
     @mouseover="handleMouseOver"
     @mouseleave="handleMouseLeave"
 >
-    <div class="journal-scroll h-[calc(100vh-100px)] overflow-hidden group-[.sidebar-collapsed]/container:overflow-visible">
+    <div class="journal-scroll h-[calc(100vh-100px)] overflow-y-auto overflow-x-hidden group-[.sidebar-collapsed]/container:overflow-visible">
         <nav class="sidebar-rounded grid w-full gap-2">
             <!-- Navigation Menu -->
             @foreach (menu()->getItems('admin') as $menuItem)
@@ -34,7 +34,7 @@
                         && $menuItem->haveChildren()
                     )
                         <div
-                            class="flex-col gap-1 mt-1 pl-8 group-[.sidebar-collapsed]/container:hidden transition-all duration-300 overflow-hidden"
+                            class="flex-col gap-1 mt-1 pl-8 group-[.sidebar-collapsed]/container:hidden transition-all duration-300"
                             :class="[(isMenuActive === '{{$menuItem->getKey()}}' || hoveringMenu === '{{$menuItem->getKey()}}') ? '!flex' : 'hidden']"
                         >
                             @foreach ($menuItem->getChildren() as $subMenuItem)

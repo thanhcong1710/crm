@@ -62,3 +62,11 @@ Route::controller(LeadController::class)->prefix('leads')->group(function () {
         Route::delete('{quote_id?}', 'delete')->name('admin.leads.quotes.delete');
     });
 });
+
+/**
+ * Commissions routes.
+ */
+Route::controller(\Webkul\Admin\Http\Controllers\Commission\CommissionController::class)->prefix('commissions')->group(function () {
+    Route::get('', 'index')->name('admin.commissions.index');
+    Route::post('update-status/{id}', 'updateStatus')->name('admin.commissions.update_status');
+});
