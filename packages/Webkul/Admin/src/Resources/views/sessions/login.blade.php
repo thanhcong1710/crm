@@ -56,8 +56,10 @@
                 <div class="flex items-center gap-3 mb-10">
                     <div
                         class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-indigo-600 font-bold text-2xl shadow-lg">
-                        K</div>
-                    <span class="text-2xl font-bold tracking-tight">Smart CRM</span>
+                        {{ config('app.admin_logo_icon_text', 'K') }}
+                    </div>
+                    <span
+                        class="text-2xl font-bold tracking-tight text-white">{{ config('app.admin_logo_text', 'Smart CRM') }}</span>
                 </div>
 
                 <h2 class="text-4xl font-extrabold mb-6 leading-[1.2]">Bứt phá doanh thu<br>cùng công nghệ.</h2>
@@ -78,12 +80,13 @@
         <!-- Right Side: Login Form -->
         <div class="w-full md:w-7/12 p-8 sm:p-12 lg:p-14 flex flex-col justify-center bg-white relative">
 
-            <!-- Mobile Header -->
             <div class="flex md:hidden items-center gap-3 mb-8">
                 <div
                     class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-indigo-600/30">
-                    C</div>
-                <span class="text-2xl font-bold text-slate-800 tracking-tight">Smart-CRM</span>
+                    {{ config('app.admin_logo_icon_text', 'C') }}
+                </div>
+                <span
+                    class="text-2xl font-bold text-slate-800 tracking-tight">{{ config('app.admin_logo_text', 'Smart-CRM') }}</span>
             </div>
 
             <div class="mb-4">
@@ -155,7 +158,8 @@
 
             <!-- QUICK LOGIN FEATURE -->
             <div class="mt-8 p-4 bg-slate-50 rounded-2xl border border-slate-100">
-                <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-3 text-center">Tài khoản DEMO</p>
+                <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-3 text-center">Tài khoản DEMO
+                </p>
                 <div class="flex flex-wrap gap-2">
                     <button type="button" onclick="quickLogin('admin@example.com', 'admin123')"
                         class="flex-1 min-w-[30%] py-2 xl:px-4 bg-white border border-slate-200 hover:border-indigo-500 hover:shadow-md hover:-translate-y-0.5 rounded-xl text-xs font-bold text-slate-700 transition-all flex flex-col items-center justify-center gap-1.5 h-16">

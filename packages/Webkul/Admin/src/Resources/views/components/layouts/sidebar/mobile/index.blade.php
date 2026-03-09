@@ -17,20 +17,14 @@
             </x-slot>
 
             <x-slot:header>
-                @if ($logo = core()->getConfigData('general.design.admin_logo.logo_image'))
-                    <img
-                        class="h-10"
-                        src="{{ Storage::url($logo) }}"
-                        alt="{{ config('app.name') }}"
-                    />
-                @else
-                    <img
-                        class="h-10"
-                        src="{{ request()->cookie('dark_mode') ? vite()->asset('images/dark-logo.svg') : vite()->asset('images/logo.svg') }}"
-                        id="logo-image"
-                        alt="{{ config('app.name') }}"
-                    />
-                @endif
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-brandColor rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-sm">
+                        {{ config('app.admin_logo_icon_text', 'K') }}
+                    </div>
+                    <span class="text-2xl font-bold text-gray-800 dark:text-white tracking-tight">
+                        {{ config('app.admin_logo_text', 'Smart CRM') }}
+                    </span>
+                </div>
             </x-slot>
 
             <x-slot:content class="p-4">
