@@ -18,7 +18,7 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
-    'admin_logo_text' => env('ADMIN_LOGO_TEXT', 'Smart CRM'),
+    'admin_logo_text'      => env('ADMIN_LOGO_TEXT', 'Smart CRM'),
     'admin_logo_icon_text' => env('ADMIN_LOGO_ICON_TEXT', 'K'),
 
     /*
@@ -111,13 +111,13 @@ return [
      */
 
     'available_locales' => [
-        'ar' => 'Arabic',
-        'en' => 'English',
-        'es' => 'Español',
-        'fa' => 'Persian',
+        'ar'    => 'Arabic',
+        'en'    => 'English',
+        'es'    => 'Español',
+        'fa'    => 'Persian',
         'pt_BR' => 'Portuguese',
-        'tr' => 'Türkçe',
-        'vi' => 'Vietnamese',
+        'tr'    => 'Türkçe',
+        'vi'    => 'Vietnamese',
     ],
 
     /*
