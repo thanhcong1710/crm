@@ -61,7 +61,7 @@ class PersonController extends Controller
 
         if (request()->ajax()) {
             return response()->json([
-                'data' => $person,
+                'data'    => $person,
                 'message' => trans('admin::app.contacts.persons.index.create-success'),
             ]);
         }
@@ -86,7 +86,7 @@ class PersonController extends Controller
                 'products' => function ($q) {
                     $q->with('product');
                 },
-                'user'
+                'user',
             ])
             ->orderBy('closed_at', 'desc')
             ->get();
@@ -117,7 +117,7 @@ class PersonController extends Controller
 
         if (request()->ajax()) {
             return response()->json([
-                'data' => $person,
+                'data'    => $person,
                 'message' => trans('admin::app.contacts.persons.index.update-success'),
             ], 200);
         }
