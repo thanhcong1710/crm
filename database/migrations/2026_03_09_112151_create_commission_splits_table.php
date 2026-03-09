@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -20,7 +21,7 @@ return new class extends Migration {
 
             $table->string('role')->nullable(); // sale, manager, introducer
             $table->decimal('commission_percentage', 5, 2)->nullable();
-            $table->decimal('commission_amount', 15, 2)->nullable(); // Up to trillions 
+            $table->decimal('commission_amount', 15, 2)->nullable(); // Up to trillions
             $table->date('payment_date')->nullable();
             $table->string('status')->default('pending'); // pending, paid, cancelled
             $table->text('notes')->nullable();

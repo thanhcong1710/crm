@@ -31,25 +31,25 @@ class CheckRentalContracts extends Command
         $leads = \Webkul\Lead\Models\Lead::whereHas('attribute_values', function ($query) use ($targetDate) {
             $query->whereHas('attribute', function ($q) {
                 $q->where('code', 'contract_end_date');
-            })->where('date_value', 'like', $targetDate . '%'); // date_value could be datetime
+            })->where('date_value', 'like', $targetDate.'%'); // date_value could be datetime
         })->get();
 
         foreach ($leads as $lead) {
             \Webkul\Activity\Models\Activity::create([
-                'title' => 'Gia hạn Hợp đồng Lead: ' . $lead->title,
-                'type' => 'call', // default activity type
-                'comment' => 'Hợp đồng thuê của khách hàng sẽ hết hạn sau 30 ngày (vào ' . $targetDate . '). Hãy gọi điện hỏi khách có gia hạn hay không.',
+                'title'         => 'Gia hạn Hợp đồng Lead: '.$lead->title,
+                'type'          => 'call', // default activity type
+                'comment'       => 'Hợp đồng thuê của khách hàng sẽ hết hạn sau 30 ngày (vào '.$targetDate.'). Hãy gọi điện hỏi khách có gia hạn hay không.',
                 'schedule_from' => now(),
-                'schedule_to' => now()->addMinutes(30),
-                'is_done' => 0,
-                'user_id' => $lead->user_id, // Assigned Sale Person
+                'schedule_to'   => now()->addMinutes(30),
+                'is_done'       => 0,
+                'user_id'       => $lead->user_id, // Assigned Sale Person
             ]);
 
             // Link to the lead
             $activity = \Webkul\Activity\Models\Activity::latest('id')->first();
             if ($activity) {
                 \DB::table('lead_activities')->insert([
-                    'lead_id' => $lead->id,
+                    'lead_id'     => $lead->id,
                     'activity_id' => $activity->id,
                 ]);
             }
@@ -57,6 +57,6 @@ class CheckRentalContracts extends Command
             $this->info("Created reminder for Lead ID {$lead->id}");
         }
 
-        $this->info("Finished checking rental contracts.");
+        $this->info('Finished checking rental contracts.');
     }
 }

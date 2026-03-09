@@ -46,61 +46,61 @@ class CommissionDataGrid extends DataGrid
     public function prepareColumns()
     {
         $this->addColumn([
-            'index' => 'id',
-            'label' => trans('admin::app.datagrid.id'),
-            'type' => 'integer',
+            'index'      => 'id',
+            'label'      => trans('admin::app.datagrid.id'),
+            'type'       => 'integer',
             'searchable' => false,
-            'sortable' => true,
+            'sortable'   => true,
             'filterable' => true,
         ]);
 
         $this->addColumn([
-            'index' => 'lead_title',
-            'label' => 'Tên Giao Dịch',
-            'type' => 'string',
+            'index'      => 'lead_title',
+            'label'      => 'Tên Giao Dịch',
+            'type'       => 'string',
             'searchable' => true,
-            'sortable' => true,
+            'sortable'   => true,
             'filterable' => true,
         ]);
 
         $this->addColumn([
-            'index' => 'user_name',
-            'label' => 'Người nhận',
-            'type' => 'string',
+            'index'      => 'user_name',
+            'label'      => 'Người nhận',
+            'type'       => 'string',
             'searchable' => true,
-            'sortable' => true,
+            'sortable'   => true,
             'filterable' => true,
         ]);
 
         $this->addColumn([
-            'index' => 'role',
-            'label' => 'Vai trò',
-            'type' => 'string',
+            'index'      => 'role',
+            'label'      => 'Vai trò',
+            'type'       => 'string',
             'searchable' => true,
-            'sortable' => true,
+            'sortable'   => true,
             'filterable' => true,
         ]);
 
         $this->addColumn([
-            'index' => 'commission_amount',
-            'label' => 'Hoa hồng (VNĐ)',
-            'type' => 'string',
+            'index'      => 'commission_amount',
+            'label'      => 'Hoa hồng (VNĐ)',
+            'type'       => 'string',
             'searchable' => true,
-            'sortable' => true,
+            'sortable'   => true,
             'filterable' => true,
-            'closure' => function ($row) {
+            'closure'    => function ($row) {
                 return core()->formatBasePrice($row->commission_amount ?? 0);
             },
         ]);
 
         $this->addColumn([
-            'index' => 'status',
-            'label' => 'Trạng thái',
-            'type' => 'string',
+            'index'      => 'status',
+            'label'      => 'Trạng thái',
+            'type'       => 'string',
             'searchable' => true,
-            'sortable' => true,
+            'sortable'   => true,
             'filterable' => true,
-            'closure' => function ($row) {
+            'closure'    => function ($row) {
                 if ($row->status === 'paid') {
                     return '<span class="label-active">Đã thanh toán</span>';
                 }
@@ -114,11 +114,11 @@ class CommissionDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index' => 'payment_date',
-            'label' => 'Ngày thanh toán',
-            'type' => 'date',
+            'index'      => 'payment_date',
+            'label'      => 'Ngày thanh toán',
+            'type'       => 'date',
             'searchable' => true,
-            'sortable' => true,
+            'sortable'   => true,
             'filterable' => true,
         ]);
     }
@@ -132,10 +132,10 @@ class CommissionDataGrid extends DataGrid
     {
         if (bouncer()->hasPermission('commissions.view_all')) {
             $this->addAction([
-                'title' => 'Đánh dấu đã thanh toán',
+                'title'  => 'Đánh dấu đã thanh toán',
                 'method' => 'POST',
-                'url' => fn($row) => route('admin.commissions.update_status', ['id' => $row->id, 'status' => 'paid']),
-                'icon' => 'icon-f-check',
+                'url'    => fn ($row) => route('admin.commissions.update_status', ['id' => $row->id, 'status' => 'paid']),
+                'icon'   => 'icon-f-check',
             ]);
         }
     }
