@@ -61,7 +61,7 @@ class PersonController extends Controller
 
         if (request()->ajax()) {
             return response()->json([
-                'data'    => $person,
+                'data' => $person,
                 'message' => trans('admin::app.contacts.persons.index.create-success'),
             ]);
         }
@@ -78,7 +78,20 @@ class PersonController extends Controller
     {
         $person = $this->personRepository->findOrFail($id);
 
-        return view('admin::contacts.persons.view', compact('person'));
+        $wonDeals = \Webkul\Lead\Models\Lead::where('person_id', $id)
+            ->whereHas('stage', function ($q) {
+                $q->where('code', 'won');
+            })
+            ->with([
+                'products' => function ($q) {
+                    $q->with('product');
+                },
+                'user'
+            ])
+            ->orderBy('closed_at', 'desc')
+            ->get();
+
+        return view('admin::contacts.persons.view', compact('person', 'wonDeals'));
     }
 
     /**
@@ -104,7 +117,7 @@ class PersonController extends Controller
 
         if (request()->ajax()) {
             return response()->json([
-                'data'    => $person,
+                'data' => $person,
                 'message' => trans('admin::app.contacts.persons.index.update-success'),
             ], 200);
         }
